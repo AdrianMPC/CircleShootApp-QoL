@@ -1,6 +1,7 @@
 #ifndef __D3DINTERFACE_H__
 #define __D3DINTERFACE_H__
 
+#include "RendererInterface.h"
 #include "Common.h"
 #include "MemoryImage.h"
 #include "SexyMatrix.h"
@@ -81,7 +82,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-class D3DInterface
+class D3DInterface : public RendererInterface
 {
 public:
 	HWND					mHWnd;
@@ -112,29 +113,29 @@ protected:
 	void					SetupDrawMode(int theDrawMode, const Color &theColor, Image *theImage);
 	static HRESULT CALLBACK PixelFormatsCallback(LPDDPIXELFORMAT theFormat, LPVOID lpContext);
 
-public:
+public:	
 	D3DInterface();
 	virtual ~D3DInterface();
 
 	void					Cleanup();
-	void					PushTransform(const SexyMatrix3 &theTransform, bool concatenate = true);
-	void					PopTransform();
+	void					PushTransform(const SexyMatrix3 &theTransform, bool concatenate = true) override;
+	void					PopTransform() override;
 	
-	bool					PreDraw();
-	void					Flush();
+	bool					PreDraw() override;
+	void					Flush() override;
 	void					RemoveMemoryImage(MemoryImage *theImage);
 
-	bool					CreateImageTexture(MemoryImage *theImage);
-	bool					RecoverBits(MemoryImage* theImage);
-	void					SetCurTexture(MemoryImage *theImage);
-	void					Blt(Image* theImage, float theX, float theY, const Rect& theSrcRect, const Color& theColor, int theDrawMode, bool linearFilter = false);
-	void					BltClipF(Image* theImage, float theX, float theY, const Rect& theSrcRect, const Rect *theClipRect, const Color& theColor, int theDrawMode);
-	void					BltMirror(Image* theImage, float theX, float theY, const Rect& theSrcRect, const Color& theColor, int theDrawMode, bool linearFilter = false);
-	void					StretchBlt(Image* theImage,  const Rect& theDestRect, const Rect& theSrcRect, const Rect* theClipRect, const Color &theColor, int theDrawMode, bool fastStretch, bool mirror = false);
-	void					BltRotated(Image* theImage, float theX, float theY, const Rect* theClipRect, const Color& theColor, int theDrawMode, double theRot, float theRotCenterX, float theRotCenterY, const Rect& theSrcRect);
-	void					BltTransformed(Image* theImage, const Rect* theClipRect, const Color& theColor, int theDrawMode, const Rect &theSrcRect, const SexyMatrix3 &theTransform, bool linearFilter, float theX = 0, float theY = 0, bool center = false);
-	void					DrawLine(double theStartX, double theStartY, double theEndX, double theEndY, const Color& theColor, int theDrawMode);
-	void					FillRect(const Rect& theRect, const Color& theColor, int theDrawMode);
+	bool					CreateImageTexture(MemoryImage *theImage) override;
+	bool					RecoverBits(MemoryImage* theImage) override;
+	void					SetCurTexture(MemoryImage *theImage) override;
+	void					Blt(Image* theImage, float theX, float theY, const Rect& theSrcRect, const Color& theColor, int theDrawMode, bool linearFilter = false) override;
+	void					BltClipF(Image* theImage, float theX, float theY, const Rect& theSrcRect, const Rect *theClipRect, const Color& theColor, int theDrawMode) override;
+	void					BltMirror(Image* theImage, float theX, float theY, const Rect& theSrcRect, const Color& theColor, int theDrawMode, bool linearFilter = false) override;
+	void					StretchBlt(Image* theImage,  const Rect& theDestRect, const Rect& theSrcRect, const Rect* theClipRect, const Color &theColor, int theDrawMode, bool fastStretch, bool mirror = false) override;
+	void					BltRotated(Image* theImage, float theX, float theY, const Rect* theClipRect, const Color& theColor, int theDrawMode, double theRot, float theRotCenterX, float theRotCenterY, const Rect& theSrcRect) override;
+	void					BltTransformed(Image* theImage, const Rect* theClipRect, const Color& theColor, int theDrawMode, const Rect &theSrcRect, const SexyMatrix3 &theTransform, bool linearFilter, float theX = 0, float theY = 0, bool center = false) override;
+	void					DrawLine(double theStartX, double theStartY, double theEndX, double theEndY, const Color& theColor, int theDrawMode) override;
+	void					FillRect(const Rect& theRect, const Color& theColor, int theDrawMode) override;
 	void					DrawTriangle(const TriVertex &p1, const TriVertex &p2, const TriVertex &p3, const Color &theColor, int theDrawMode);
 	void					DrawTriangleTex(const TriVertex &p1, const TriVertex &p2, const TriVertex &p3, const Color &theColor, int theDrawMode, Image *theTexture, bool blend = true);
 	void					DrawTrianglesTex(const TriVertex theVertices[][3], int theNumTriangles, const Color &theColor, int theDrawMode, Image *theTexture, float tx = 0, float ty = 0, bool blend = true);

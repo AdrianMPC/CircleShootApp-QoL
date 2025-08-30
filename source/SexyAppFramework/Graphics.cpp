@@ -7,6 +7,8 @@
 #include "Debug.h"
 #include "SexyMatrix.h"
 #include <math.h>
+#include <memory>
+#include "IRenderer.h"
 
 using namespace Sexy;
 
