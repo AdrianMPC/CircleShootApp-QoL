@@ -123,7 +123,7 @@ public:
 	
 	bool					PreDraw() override;
 	void					Flush() override;
-	void					RemoveMemoryImage(MemoryImage *theImage);
+	void					RemoveMemoryImage(MemoryImage *theImage) override;
 
 	bool					CreateImageTexture(MemoryImage *theImage) override;
 	bool					RecoverBits(MemoryImage* theImage) override;
