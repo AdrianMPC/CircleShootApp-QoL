@@ -29,12 +29,12 @@ bool gUnlocked = false;
 
 PracticeScreen::PracticeScreen()
 {
-	mNextButton = Sexy::MakeButton(0, this, "", 1, Sexy::IMAGE_GAUNTNEXTBUTTON, 4);
-	mBackButton = Sexy::MakeButton(1, this, "", 2, Sexy::IMAGE_GAUNTBACKBUTTON, 4);
-	mGauntPlayButton = Sexy::MakeButton(2, this, "", 3, Sexy::IMAGE_GAUNTPLAYBUTTON, 4);
-	mMainMenuButton = Sexy::MakeButton(3, this, "", 4, Sexy::IMAGE_GAUNTMAINMENUBUTTON, 3);
-	mPracticeButton = Sexy::MakeButton(5, this, "", 5, Sexy::IMAGE_GAUNTPRACTICEBUTTON, 3);
-	mSurvivalButton = Sexy::MakeButton(6, this, "", 6, Sexy::IMAGE_GAUNTSURVIVALBUTTON, 3);
+	mNextButton = MakeButton(0, this, "", CircleButton::CB_ClickSound, Sexy::IMAGE_GAUNTNEXTBUTTON, 4);
+	mBackButton = MakeButton(1, this, "", CircleButton::CB_ClickSound, Sexy::IMAGE_GAUNTBACKBUTTON, 4);
+	mGauntPlayButton = MakeButton(2, this, "", CircleButton::CB_ClickSound, Sexy::IMAGE_GAUNTPLAYBUTTON, 4);
+	mMainMenuButton = MakeButton(3, this, "", CircleButton::CB_ClickSound, Sexy::IMAGE_GAUNTMAINMENUBUTTON, 3);
+	mPracticeButton = MakeButton(5, this, "", CircleButton::CB_ClickSound, Sexy::IMAGE_GAUNTPRACTICEBUTTON, 3);
+	mSurvivalButton = MakeButton(6, this, "", CircleButton::CB_ClickSound, Sexy::IMAGE_GAUNTSURVIVALBUTTON, 3);
 
 	mThumbnail = NULL;
 	mScoreSet = new std::multiset<HighScore>();
@@ -337,6 +337,20 @@ void PracticeScreen::Draw(Graphics *g)
 void PracticeScreen::KeyChar(char theChar)
 {
 	Widget::KeyChar(theChar);
+#ifndef RELEASEFINAL
+	char c = toupper(theChar);
+	if (c == 'U') //Recover this key
+	{
+		if (gUnlocked)
+		{
+			gUnlocked = false;
+		}
+		else
+		{
+			gUnlocked = true;
+		}
+	}
+#endif
 }
 
 void PracticeScreen::MouseLeave()

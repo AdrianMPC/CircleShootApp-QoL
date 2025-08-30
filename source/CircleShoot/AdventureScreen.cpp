@@ -28,8 +28,8 @@ using namespace Sexy;
 
 AdventureScreen::AdventureScreen()
 {
-	mMainMenuButton = MakeButton(0, this, "", 1, Sexy::IMAGE_ADVMAINMENUBUTTON, 3);
-	mPlayButton = MakeButton(1, this, "", 1, Sexy::IMAGE_ADVPLAYBUTTON, 3);
+	mMainMenuButton = MakeButton(0, this, "", CircleButton::CB_ClickSound, Sexy::IMAGE_ADVMAINMENUBUTTON, 3);
+	mPlayButton = MakeButton(1, this, "", CircleButton::CB_ClickSound, Sexy::IMAGE_ADVPLAYBUTTON, 3);
 
 	Point aDoorPoints[12] = {
 		Point(226, 300),
@@ -314,8 +314,50 @@ void AdventureScreen::Draw(Graphics *g)
 	WriteWordWrapped(g, aStageDescRect, aStageDesc, 14, -1);
 }
 
-void AdventureScreen::KeyChar(char)
+void AdventureScreen::KeyChar(char theChar) //Huh what cheats would go here
 {
+#ifndef RELEASEFINAL //How about these
+	char c = toupper(theChar);
+	if (c == '+') //Increase current door
+	{
+		if (mCurrentDoor != 11) //Anti-crash
+			mCurrentDoor++;
+	}
+	else if (c == '-') //Decrease current door
+	{
+		mCurrentDoor--;
+	}
+	else if (c == 'm') //Increase max stage
+	{
+		mMaxStage++;
+	}
+	else if (c == 't') //Force temple open
+	{
+		mStartNextTempleOnReveal ^= true;
+	}
+	else if (c == 'l') //Increase temple
+	{
+		if (mTemples != 4)
+			mTemples++;
+	}
+	else if (c == 's') //Decrease temple
+	{
+		mTemples--;
+	}
+	/*else if (c == 'h') //Add cheated highscore
+	{
+		//mScoreSet //todo
+	}*/
+	else if (c == 'r') //Reset highscores
+	{
+		mScoreSet = NULL;
+	}
+	else if (c == 'u')
+	{
+		RevealTemple(75, mMaxStage / 3 + 1);
+		SetStartNextTempleOnRevel(true);
+	}
+#endif
 }
 
 void AdventureScreen::MouseLeave()
