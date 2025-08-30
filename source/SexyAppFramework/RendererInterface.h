@@ -1,15 +1,11 @@
 #ifndef __RENDERERINTERFACE_H__
 #define __RENDERERINTERFACE_H__
 
-namespace Sexy {
-    struct Rect;
-    struct Color;
-    struct Point;
-    struct TriVertex;
-    class Image;
-    class MemoryImage;
-    class SexyMatrix3;
-}
+#include "Common.h"
+#include "MemoryImage.h"
+#include "SexyMatrix.h"
+
+using namespace Sexy;
 
 class RendererInterface {
 public:
@@ -35,7 +31,7 @@ public:
 
     virtual void                    DrawLine(double theStartX, double theStartY, double theEndX, double theEndY, const Color& theColor, int theDrawMode) = 0;
     virtual void                    FillRect(const Rect& theRect, const Color& theColor, int theDrawMode) = 0;
-    virtual void                    DrawTriangle(const TriVertex& p1, const TriVertex& p2, const TriVertex& p3, const Color& theColor, int theDrawMode)) = 0;
+    virtual void                    DrawTriangle(const TriVertex& p1, const TriVertex& p2, const TriVertex& p3, const Color& theColor, int theDrawMode) = 0;
     virtual void					DrawTriangleTex(const TriVertex& p1, const TriVertex& p2, const TriVertex& p3, const Color& theColor, int theDrawMode, Image* theTexture, bool blend = true) = 0;
     virtual void					DrawTrianglesTex(const TriVertex theVertices[][3], int theNumTriangles, const Color& theColor, int theDrawMode, Image* theTexture, float tx = 0, float ty = 0, bool blend = true) = 0;
     virtual void					DrawTrianglesTexStrip(const TriVertex theVertices[], int theNumTriangles, const Color& theColor, int theDrawMode, Image* theTexture, float tx = 0, float ty = 0, bool blend = true) = 0;
